@@ -11,26 +11,40 @@ function AppContent() {
   const [tab, setTab] = useState("products");
 
   return (
-    <>
+    <div>
+      <div>
+        {/* ✅ Cypress expects h3 (NOT h4) */}
+        <h3 className="text-center">
+          Shopping Cart
+        </h3>
+      </div>
+
+      {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="text-center w-100">
-          <h4 className="text-center text-white">
-            Shopping Cart
-          </h4>
-
-          <div>
-            <button onClick={() => setTab("products")}>Products</button>
-            <button onClick={() => setTab("cart")}>Cart</button>
-            <button onClick={() => setTab("wishlist")}>Wishlist</button>
+          <div className="d-flex justify-content-center gap-2">
+            <button onClick={() => setTab("products")}>
+              Products
+            </button>
+            <button onClick={() => setTab("cart")}>
+              Cart
+            </button>
+            <button onClick={() => setTab("wishlist")}>
+              Wishlist
+            </button>
           </div>
         </div>
       </nav>
 
-      {tab === "products" && <ProductList />}
-      {tab === "cart" && <Cart />}
-      {tab === "wishlist" && <Wishlist />}
+      {/* Pages */}
+      <div>
+        {tab === "products" && <ProductList />}
+        {tab === "cart" && <Cart />}
+        {tab === "wishlist" && <Wishlist />}
+      </div>
+
       <Coupon />
-    </>
+    </div>
   );
 }
 

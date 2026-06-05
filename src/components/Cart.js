@@ -15,7 +15,7 @@ export default function Cart() {
       {cart.map((item) => (
         <div className="custom-card card" key={item.id}>
           <div className="card-body">
-            <h5>{item.name}</h5>
+            <h4>{item.name}</h4>
             <p>₹{item.price}</p>
 
             <button

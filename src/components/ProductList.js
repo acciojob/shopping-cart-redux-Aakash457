@@ -20,14 +20,14 @@ export default function ProductList() {
             <p>₹{p.price}</p>
 
             <button
-              className="btn btn-primary"
+              className="btn"
               onClick={() => dispatch(addToCart(p))}
             >
               Add To Cart
             </button>
 
             <button
-              className="btn btn-secondary"
+              className="btn"
               onClick={() => dispatch(addToWishlist(p))}
             >
               Wishlist

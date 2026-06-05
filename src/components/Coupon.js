@@ -2,26 +2,21 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { applyCoupon } from "../redux/actions";
 
-function Coupon() {
+export default function Coupon() {
   const [code, setCode] = useState("");
   const dispatch = useDispatch();
 
   return (
     <div>
       <input
-        type="text"
-        placeholder="Coupon Code"
         value={code}
         onChange={(e) => setCode(e.target.value)}
+        placeholder="Coupon"
       />
 
-      <button
-        onClick={() => dispatch(applyCoupon(code))}
-      >
-        Apply Coupon
+      <button onClick={() => dispatch(applyCoupon(code))}>
+        Apply
       </button>
     </div>
   );
 }
-
-export default Coupon;

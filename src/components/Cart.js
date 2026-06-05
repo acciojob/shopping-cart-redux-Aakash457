@@ -1,70 +1,48 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import {
   removeFromCart,
   increaseQty,
   decreaseQty,
 } from "../redux/actions";
 
-function Cart() {
-  const dispatch = useDispatch();
-
+export default function Cart() {
   const cart = useSelector((state) => state.cart);
-  const discount = useSelector(
-    (state) => state.discount
-  );
-
-  const subtotal = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
-  const total =
-    subtotal - (subtotal * discount) / 100;
+  const dispatch = useDispatch();
 
   return (
     <div>
-      <h2>Cart</h2>
-
       {cart.map((item) => (
-        <div key={item.id}>
-          <span>{item.name}</span>
-          <span> ₹{item.price}</span>
+        <div className="custom-card card" key={item.id}>
+          <div className="card-body">
+            <h5>{item.name}</h5>
+            <p>₹{item.price}</p>
 
-          <button
-            onClick={() =>
-              dispatch(decreaseQty(item.id))
-            }
-          >
-            -
-          </button>
+            <button
+              className="btn"
+              onClick={() => dispatch(decreaseQty(item.id))}
+            >
+              -
+            </button>
 
-          <span>{item.quantity}</span>
+            <span>{item.quantity}</span>
 
-          <button
-            onClick={() =>
-              dispatch(increaseQty(item.id))
-            }
-          >
-            +
-          </button>
+            <button
+              className="btn"
+              onClick={() => dispatch(increaseQty(item.id))}
+            >
+              +
+            </button>
 
-          <button
-            onClick={() =>
-              dispatch(removeFromCart(item.id))
-            }
-          >
-            Remove
-          </button>
+            <button
+              className="btn"
+              onClick={() => dispatch(removeFromCart(item.id))}
+            >
+              Remove
+            </button>
+          </div>
         </div>
       ))}
-
-      <h3>Subtotal: ₹{subtotal}</h3>
-      <h3>Discount: {discount}%</h3>
-      <h2>Total: ₹{total}</h2>
     </div>
   );
 }
-
-export default Cart;

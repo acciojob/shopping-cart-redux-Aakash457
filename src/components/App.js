@@ -1,47 +1,43 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 
+import ProductList from "./ProductList";
 import Cart from "./Cart";
 import Wishlist from "./Wishlist";
 import Coupon from "./Coupon";
 
-import { addToCart, addToWishlist } from "../redux/actions";
-
-const products = [
-  { id: 1, name: "Laptop", price: 50000 },
-  { id: 2, name: "Phone", price: 25000 },
-  { id: 3, name: "Headphones", price: 3000 },
-];
-
-function App() {
-  const dispatch = useDispatch();
+function AppContent() {
+  const [tab, setTab] = useState("products");
 
   return (
-    <div>
-      <h1>Shopping Cart Application</h1>
+    <>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="text-center w-100">
+          <h4 className="text-center text-white">
+            Shopping Cart
+          </h4>
 
-      <h2>Products</h2>
-
-      {products.map((product) => (
-        <div key={product.id}>
-          <h3>{product.name}</h3>
-          <p>₹{product.price}</p>
-
-          <button onClick={() => dispatch(addToCart(product))}>
-            Add to Cart
-          </button>
-
-          <button onClick={() => dispatch(addToWishlist(product))}>
-            Add to Wishlist
-          </button>
+          <div>
+            <button onClick={() => setTab("products")}>Products</button>
+            <button onClick={() => setTab("cart")}>Cart</button>
+            <button onClick={() => setTab("wishlist")}>Wishlist</button>
+          </div>
         </div>
-      ))}
+      </nav>
 
+      {tab === "products" && <ProductList />}
+      {tab === "cart" && <Cart />}
+      {tab === "wishlist" && <Wishlist />}
       <Coupon />
-      <Cart />
-      <Wishlist />
-    </div>
+    </>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Provider store={store}>
+      <AppContent />
+    </Provider>
+  );
+}

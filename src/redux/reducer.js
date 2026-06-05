@@ -14,12 +14,10 @@ const initialState = {
   discount: 0,
 };
 
-const reducer = (state = initialState, action) => {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_CART: {
-      const item = state.cart.find(
-        (p) => p.id === action.payload.id
-      );
+      const item = state.cart.find((p) => p.id === action.payload.id);
 
       if (item) {
         return {
@@ -34,19 +32,14 @@ const reducer = (state = initialState, action) => {
 
       return {
         ...state,
-        cart: [
-          ...state.cart,
-          { ...action.payload, quantity: 1 },
-        ],
+        cart: [...state.cart, { ...action.payload, quantity: 1 }],
       };
     }
 
     case REMOVE_FROM_CART:
       return {
         ...state,
-        cart: state.cart.filter(
-          (p) => p.id !== action.payload
-        ),
+        cart: state.cart.filter((p) => p.id !== action.payload),
       };
 
     case INCREASE_QTY:
@@ -72,35 +65,23 @@ const reducer = (state = initialState, action) => {
       };
 
     case ADD_TO_WISHLIST:
-      if (
-        state.wishlist.find(
-          (p) => p.id === action.payload.id
-        )
-      ) {
-        return state;
-      }
-
       return {
         ...state,
-        wishlist: [...state.wishlist, action.payload],
+        wishlist: state.wishlist.find((p) => p.id === action.payload.id)
+          ? state.wishlist
+          : [...state.wishlist, action.payload],
       };
 
     case REMOVE_FROM_WISHLIST:
       return {
         ...state,
-        wishlist: state.wishlist.filter(
-          (p) => p.id !== action.payload
-        ),
+        wishlist: state.wishlist.filter((p) => p.id !== action.payload),
       };
 
     case APPLY_COUPON:
       let discount = 0;
-
-      if (action.payload === "SAVE10") {
-        discount = 10;
-      } else if (action.payload === "SAVE20") {
-        discount = 20;
-      }
+      if (action.payload === "SAVE10") discount = 10;
+      if (action.payload === "SAVE20") discount = 20;
 
       return {
         ...state,
@@ -110,6 +91,4 @@ const reducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
-
-export default reducer;
+}

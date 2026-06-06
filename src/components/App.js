@@ -1,57 +1,25 @@
-import React, { useState } from "react";
-import { Provider } from "react-redux";
-import store from "../redux/store";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "../pages/Home";
+import FlightSearch from "../pages/FlightSearch";
+import FlightResults from "../pages/FlightResults";
+import FlightBooking from "../pages/FlightBooking";
+import Confirmation from "../pages/Confirmation";
+import Navbar from "./Navbar";
 
-import ProductList from "./ProductList";
-import Cart from "./Cart";
-import Wishlist from "./Wishlist";
-import Coupon from "./Coupon";
-
-function AppContent() {
-  const [tab, setTab] = useState("products");
-
+function App() {
   return (
-    <div>
-      <div>
-        {/* ✅ Cypress expects h3 (NOT h4) */}
-        <h3 className="text-center">
-          Shopping Cart
-        </h3>
-      </div>
-
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="text-center w-100">
-          <div className="d-flex justify-content-center gap-2">
-            <button onClick={() => setTab("products")}>
-              Products
-            </button>
-            <button onClick={() => setTab("cart")}>
-              Cart
-            </button>
-            <button onClick={() => setTab("wishlist")}>
-              Wishlist
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Pages */}
-      <div>
-        {tab === "products" && <ProductList />}
-        {tab === "cart" && <Cart />}
-        {tab === "wishlist" && <Wishlist />}
-      </div>
-
-      <Coupon />
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/flight-search" element={<FlightSearch />} />
+        <Route path="/flight-results" element={<FlightResults />} />
+        <Route path="/flight-booking" element={<FlightBooking />} />
+        <Route path="/confirmation" element={<Confirmation />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default function App() {
-  return (
-    <Provider store={store}>
-      <AppContent />
-    </Provider>
-  );
-}
+export default App;
